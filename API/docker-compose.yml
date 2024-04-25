@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mysql://root:pass@db:3306/API_PY
+      - OTHER_VARIABLE=value
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=API_PY
+      - MYSQL_ROOT_PASSWORD=pass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
